@@ -1,7 +1,8 @@
 <script>
   import {link} from 'svelte-spa-router'
-  export let text = 'Lien'
+  export let text = 'Toto'
   export let to = '/';
+  export let toto = 'toto'
 </script>
 
 <a href={to} use:link>

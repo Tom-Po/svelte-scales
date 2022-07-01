@@ -1,6 +1,6 @@
 <script>
   import ChordListItem from '../lib/ChordListItem.svelte'
-  export let params;
+  export let params
   const { root } = params
   const majorTypes = ['maj', 'maj7', 'maj9', 'maj6']
   const minorTypes = ['m', 'm6', 'm7', 'm9']

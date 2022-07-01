@@ -6,6 +6,7 @@
   import About from './routes/About.svelte'
   import { theme } from './stores.js'
   import ChordTypes from './routes/ChordTypes.svelte'
+  import NavLink from './lib/NavLink.svelte'
 
   const routes = {
     '/': Index,
@@ -34,10 +35,10 @@
     <a href='#/'>Home</a>
     <a href='#/chords'>Chords</a>
     <a href='#/about'>About</a>
+    <NavLink />
   </nav>
   <p>current Theme is {currentTheme}  </p>
   <Router routes={routes} />
-  <button on:click={() => theme.update(theme => theme === 'dark' ? 'light' : 'dark')}>change theme</button>
 </main>
 
 <style>
