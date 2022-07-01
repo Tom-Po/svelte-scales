@@ -3,79 +3,82 @@
   import Index from './routes/Index.svelte'
   import Chords from './routes/Chords.svelte'
   import NotFound from './routes/NotFound.svelte'
+  import About from './routes/About.svelte'
+  import { theme } from './stores.js'
+  import ChordTypes from './routes/ChordTypes.svelte'
 
   const routes = {
-    // Exact path
     '/': Index,
-
-    // Chords
     '/chords': Chords,
-
-    // // Using named parameters, with last being optional
-    // '/author/:first/:last?': Author,
+    '/chords/:root': ChordTypes,
+    '/about': About,
+    // '/chords/:chordName/:altered?': SpecificChordComponent,
     //
+
     // // Wildcard parameter
     // '/book/*': Book,
-    //
+
     // Catch-all
     // This is optional, but if present it must be the last
     '*': NotFound,
   }
+  let currentTheme;
+
+  theme.subscribe((value => {
+    currentTheme = value
+  }))
 </script>
 
 <main>
   <nav>
     <a href='#/'>Home</a>
     <a href='#/chords'>Chords</a>
+    <a href='#/about'>About</a>
   </nav>
+  <p>current Theme is {currentTheme}  </p>
   <Router routes={routes} />
+  <button on:click={() => theme.update(theme => theme === 'dark' ? 'light' : 'dark')}>change theme</button>
 </main>
 
 <style>
   :root {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
     Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    --bg-color: #012030;
+    --bg-light-color: #13678A;
+    --contrast-color: #45C4B0;
+    --success-color: #9AEBA3;
+    --accent-color: #DAFDBA;
+  }
+
+  :global(body) {
+    margin: 0;
+  }
+
+  :global(a) {
+    color: white;
+  }
+
+  :global(a):hover {
+    color: var(--accent-color);
+  }
+
+  :global(ul) {
+    margin: 0;
+    padding: 0;
+  }
+
+  :global(li) {
+    list-style: none;
   }
 
   main {
     padding: 1em;
     margin: 0 auto;
     text-align: center;
-  }
-
-  h1 {
-    color: #ff3e00;
-    text-transform: uppercase;
-    font-size: 4rem;
-    font-weight: 100;
-    line-height: 1.1;
-    margin: 2rem auto;
-    max-width: 14rem;
-  }
-
-  p {
-    max-width: 14rem;
-    margin: 1rem auto;
-    line-height: 1.35;
-  }
-
-  a {
-    color: black;
-    cursor: pointer;
-    padding: 1rem;
-  }
-
-  a:hover {
-    color: orangered;
-  }
-
-  @media (min-width: 480px) {
-    h1 {
-      max-width: none;
-    }
-
-    p {
-      max-width: none;
-    }
+    background: rgb(1, 32, 48);
+    background: linear-gradient(146deg, rgba(1, 32, 48, 1) 0%, rgba(19, 103, 138, 1) 32%, rgba(69, 196, 176, 1) 58%, rgba(154, 235, 163, 1) 74%, rgba(218, 253, 186, 1) 86%);
+    color: white;
+    height: 100vh;
   }
 </style>
