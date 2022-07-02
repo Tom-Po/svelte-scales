@@ -6,16 +6,15 @@
   import About from './routes/About.svelte'
   import { theme } from './stores.js'
   import ChordTypes from './routes/ChordTypes.svelte'
-  import NavLink from './lib/NavLink.svelte'
+  import CircleFifths from './routes/CircleFifths.svelte'
+  import Nav from './lib/Nav.svelte'
 
   const routes = {
     '/': Index,
     '/chords': Chords,
+    '/circle': CircleFifths,
     '/chords/:root': ChordTypes,
     '/about': About,
-    // '/chords/:chordName/:altered?': SpecificChordComponent,
-    //
-
     // // Wildcard parameter
     // '/book/*': Book,
 
@@ -31,12 +30,7 @@
 </script>
 
 <main>
-  <nav>
-    <a href='#/'>Home</a>
-    <a href='#/chords'>Chords</a>
-    <a href='#/about'>About</a>
-    <NavLink />
-  </nav>
+  <Nav />
   <p>current Theme is {currentTheme}  </p>
   <Router routes={routes} />
 </main>
@@ -58,6 +52,7 @@
 
   :global(a) {
     color: white;
+    text-decoration: none;
   }
 
   :global(a):hover {
@@ -74,7 +69,6 @@
   }
 
   main {
-    padding: 1em;
     margin: 0 auto;
     text-align: center;
     background: rgb(1, 32, 48);

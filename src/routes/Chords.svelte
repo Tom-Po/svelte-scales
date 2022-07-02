@@ -22,9 +22,6 @@
   {/each}
 </ul>
 
-
-<CircleOfFiths />
-
 <style>
   ul {
     display: flex;

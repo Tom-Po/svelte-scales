@@ -7,8 +7,8 @@
   import G from '../assets/audio/samples/G.mp3'
   import E from '../assets/audio/samples/lowE.mp3'
   import e from '../assets/audio/samples/highE.mp3'
-
 </script>
+
 <svelte:head>
   <title>Scales - Home</title>
 </svelte:head>
@@ -23,12 +23,12 @@
   <li></li>
   <li></li>
 </ul>
-<Audio source={e}/>
-<Audio source={B}/>
-<Audio source={G}/>
-<Audio source={D}/>
-<Audio source={A}/>
-<Audio source={E}/>
+<Audio source={e} />
+<Audio source={B} />
+<Audio source={G} />
+<Audio source={D} />
+<Audio source={A} />
+<Audio source={E} />
 <a href='#/chords'>Chords</a>
 
 <style>

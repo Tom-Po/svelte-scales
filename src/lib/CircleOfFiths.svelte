@@ -1,16 +1,24 @@
 <script>
+  import { onDestroy } from 'svelte'
   import { push } from 'svelte-spa-router'
+  import { majorRootNotes, minorRootNotes } from '../stores.js'
 
   const degreesToRad = (deg) => deg * 0.017453
-
-  const majorRootNotes = ['A', 'E', 'B', 'Gb/F#', 'Db', 'Ab', 'Eb', 'Bb', 'F', 'C', 'G', 'D']
-  const minorRootNotes = ['F#', 'C#', 'G#', 'Eb/D#', 'Bb', 'F', 'C', 'G', 'D', 'A', 'E', 'B']
+  const radian = degreesToRad(360 / 12)
+  const radius = 190
   const circleCenter = 320
-  const offset = 125
+  const offset = 130
   const minorOffset = 45.5
 
-  let radius = 190
-  let radian = degreesToRad(360 / majorRootNotes.length)
+  let majorNotes = []
+  let minorNotes = []
+
+  const unsubscribeMajor = majorRootNotes.subscribe(value => {
+    majorNotes = value
+  })
+  const unsubscribeMinor = minorRootNotes.subscribe(value => {
+    minorNotes = value
+  })
 
   const getPosition = (notes, offset) => notes.map((note, index) => ({
     note,
@@ -18,22 +26,25 @@
     y: (radius + offset) * Math.sin(radian * index) + circleCenter,
   }))
 
-  $: majorNotes = getPosition(majorRootNotes, offset)
-  $: minorNotes = getPosition(minorRootNotes, minorOffset)
+  $: majorNotes = getPosition(majorNotes, offset)
+  $: minorNotes = getPosition(minorNotes, minorOffset)
 
-  const handleClick = (click) => {
-    push('#/chords/' + click.note)
+  const handleClick = (note) => {
+    push('#/chords/' + note)
   }
+
+  onDestroy(unsubscribeMajor)
+  onDestroy(unsubscribeMinor)
 </script>
 
 <div class='note-pattern'>
   <div class='circle'></div>
   {#each majorNotes as note}
-    <div class='circle-text' on:click={() => handleClick(note)}
+    <div class='circle-text' on:click={() => handleClick(note.note)}
          style='top: {note.y}px; left: {note.x}px'>{note.note}</div>
   {/each}
   {#each minorNotes as note}
-    <div class='circle-text minor' on:click={() => handleClick(note)}
+    <div class='circle-text minor' on:click={() => handleClick(note.note)}
          style='top: {note.y}px; left: {note.x}px'>{note.note}</div>
   {/each}
 </div>
@@ -56,9 +67,21 @@
     position: absolute;
     width: 600px;
     height: 600px;
-    overflow: visible;
-    background-color: rgba(var(--contrast-color), .5);
     transform: scale(1.05);
+    transform-origin: top left;
+  }
+
+  .circle:after {
+    content: '';
+    position: absolute;
+    background-color: #DAFDBA;
+    border: 5px solid var(--bg-color);
+    border-radius: 50%;
+    width: 525px;
+    height: 525px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     transform-origin: top left;
   }
 
@@ -73,13 +96,14 @@
     cursor: pointer;
     border-radius: 50%;
     transition: 200ms ease-in-out;
+    text-align: center;
   }
 
   .circle-text:after {
     content: "";
     position: absolute;
     left: 0;
-    top: 0;
+    top: 50%;
     transform: translateX(-100%);
     width: 100px;
     height: 2px;
@@ -98,8 +122,7 @@
 
   .circle-text:hover {
     opacity: .75;
-    font-size: 2rem;
-    vertical-align: middle;
+    font-size: 1.25rem;
   }
 
   @keyframes major {
