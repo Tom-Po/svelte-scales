@@ -6,9 +6,9 @@
   const degreesToRad = (deg) => deg * 0.017453
   const radian = degreesToRad(360 / 12)
   const radius = 190
-  const circleCenter = 320
-  const offset = 130
-  const minorOffset = 45.5
+  const circleCenter = 300
+  const offset = 120
+  const minorOffset = 30
 
   let majorNotes = []
   let minorNotes = []
@@ -39,13 +39,14 @@
 
 <div class='note-pattern'>
   <div class='circle'></div>
+  <div class='minor-label'>Minor</div>
   {#each majorNotes as note}
     <div class='circle-text' on:click={() => handleClick(note.note)}
-         style='top: {note.y}px; left: {note.x}px'>{note.note}</div>
+         style='top: {note.y}px; left: {note.x}px'><span>{note.note}</span></div>
   {/each}
   {#each minorNotes as note}
     <div class='circle-text minor' on:click={() => handleClick(note.note)}
-         style='top: {note.y}px; left: {note.x}px'>{note.note}</div>
+         style='top: {note.y}px; left: {note.x}px'><span>{note.note}</span></div>
   {/each}
 </div>
 
@@ -62,52 +63,53 @@
   }
 
   .circle {
-    border: 1px solid var(--contrast-color);
-    border-radius: 50%;
-    position: absolute;
+    background-color: var(--bg-color);
+
     width: 600px;
     height: 600px;
-    transform: scale(1.05);
+
+    /*transform: scale(1.05);*/
     transform-origin: top left;
   }
 
   .circle:after {
     content: '';
-    position: absolute;
-    background-color: #DAFDBA;
-    border: 5px solid var(--bg-color);
-    border-radius: 50%;
+    background-color: var(--accent-color);
+
     width: 525px;
     height: 525px;
+
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+  }
+
+  .circle,
+  .circle:after {
+
     transform-origin: top left;
   }
 
-  .circle-text {
+  .circle,
+  .circle-text,
+  .circle:after {
+    border-radius: 50%;
     position: absolute;
-    width: 4rem;
-    height: 4rem;
-    transform: translate(-50%, -50%);
+  }
+
+  .circle-text {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    cursor: pointer;
-    border-radius: 50%;
-    transition: 200ms ease-in-out;
-    text-align: center;
-  }
 
-  .circle-text:after {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateX(-100%);
-    width: 100px;
-    height: 2px;
-    background-color: red;
+    font-weight: 600;
+    cursor: pointer;
+
+    width: 4rem;
+    height: 4rem;
+
+    transform: translate(-50%, -50%);
+    transition: 200ms ease-in-out;
   }
 
   .circle-text:not(.minor) {
@@ -120,9 +122,16 @@
     animation-delay: 20ms;
   }
 
-  .circle-text:hover {
-    opacity: .75;
-    font-size: 1.25rem;
+  .circle-text:hover span {
+    transform: scale(1.2);
+  }
+
+  .minor-label {
+    position: absolute;
+    top: 150px;
+    left: 50%;
+    color: var(--bg-color);
+    font-size: 2rem;
   }
 
   @keyframes major {

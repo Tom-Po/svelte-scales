@@ -1,9 +1,10 @@
 <script>
   export let text = 'Button';
   export let onClick = () => {};
+
 </script>
 
-<button on:click={onClick}>{text}</button>
+<button on:click={onClick()}>{text}</button>
 
 <style>
   button {
