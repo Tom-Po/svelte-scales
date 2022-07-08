@@ -2,21 +2,17 @@
   import ChordListItem from '../lib/ChordListItem.svelte'
   import PageTransition from '../lib/PageTransition.svelte'
   import { chords } from '../stores.js'
-  import { onMount } from 'svelte'
+  import { groupByLetter } from '../lib/utils/Array.js'
 
   let jsonChords = []
-  let chordsFromAPI
-
-  onMount(async () => {
-    const response = await fetch('http://localhost:8001/chords')
-    chordsFromAPI = await response.json()
-  })
+  // let chordsFromAPI
+  //
+  // onMount(async () => {
+  //   const response = await fetch('http://localhost:8001/chords')
+  //   chordsFromAPI = await response.json()
+  // })
 
   chords.subscribe(chords => {
-    const groupByLetter = ((items) => items.reduce((rv, x) => {
-      (rv[x.chordName.charAt(0)] = rv[x.chordName.charAt(0)] || []).push(x)
-      return rv
-    }, {}))
     jsonChords = groupByLetter(chords)
   })
 

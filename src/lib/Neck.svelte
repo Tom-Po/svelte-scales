@@ -54,8 +54,8 @@
         showNotes={showNotes}
       />
     {/each}
-    {#each Array(6) as _, i}
-      <div class='string-wave' style='--left-factor: {i}'></div>
+    {#each notes as note, i}
+      <div class='string-wave' class:muted={note.isMuted} style='--left-factor: {i}'></div>
     {/each}
     <Frets count={fretCount} />
   </Fretboard>
@@ -75,11 +75,16 @@
     background-color: var(--accent-color);
 
     position: absolute;
-    bottom: 0;
-    top: 0;
+    bottom: -10px;
+    top: -10px;
     left: var(--left);
     width: 4px;
     opacity: var(--alpha);
+    z-index: 9;
+  }
+
+  .string-wave.muted {
+    opacity: .25;
   }
 
   @media screen and (max-width: 768px) {
