@@ -3,7 +3,6 @@
   import PageTransition from '../lib/PageTransition.svelte'
   import { chords } from '../stores.js'
   import { onMount } from 'svelte'
-  import SineWave from '../lib/SineWave.svelte'
 
   let jsonChords = []
   let chordsFromAPI

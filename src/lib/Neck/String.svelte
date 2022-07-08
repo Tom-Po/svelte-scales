@@ -2,9 +2,7 @@
   import { neck } from '../utils/Neck.js'
 
   export let muted, showNotes = false
-  export let note = 0
-  export let noteIndex = 0
-  export let modifier = 0
+  export let note, noteIndex, modifier = 0
   export let chord
 </script>
 
@@ -13,14 +11,14 @@
 {:else if showNotes}
   <div
     class={
-              neck[noteIndex][note] === chord.rootNote
-              ? 'string flex-center root'
-              : neck[noteIndex][note] === chord.third
-              ? 'string flex-center third'
-              : neck[noteIndex][note] === chord.fifth
-              ? 'string flex-center fifth'
-              : 'string flex-center '
-            }
+      neck[noteIndex][note] === chord.rootNote
+      ? 'string flex-center root'
+      : neck[noteIndex][note] === chord.third
+      ? 'string flex-center third'
+      : neck[noteIndex][note] === chord.fifth
+      ? 'string flex-center fifth'
+      : 'string flex-center '
+    }
     style='--top-factor: {note - modifier}'>
     {neck[noteIndex][note]}
   </div>
@@ -65,7 +63,9 @@
   }
 
   .string.muted {
-    background-color: darkslategrey;
+    color: black;
+    font-size: 1.5rem;
+    background: none;
   }
 
   .string:nth-of-type(2) {

@@ -12,7 +12,7 @@
 
   export let chord = defaultChords[0]
 
-  let showNotes = false
+  let showNotes = true
 
   const strings = chord.strings.split(',')
 
@@ -43,7 +43,7 @@
     <span>Show  {showNotes ? 'Fingering' : 'Notes'}</span>
   </label>
   <Indicator muted={!showNotes} chord={chord} />
-  <Fretboard --height="{fretboardHeight}" isTopNeck={isTopNeck}>
+  <Fretboard --height='{fretboardHeight}' isTopNeck={isTopNeck}>
     {#each notes as string, i}
       <String
         muted={string.isMuted}
@@ -52,7 +52,7 @@
         noteIndex={i}
         note={string.noteNumber}
         showNotes={showNotes}
-        />
+      />
     {/each}
     {#each Array(6) as _, i}
       <div class='string-wave' style='--left-factor: {i}'></div>
@@ -83,8 +83,7 @@
   }
 
   @media screen and (max-width: 768px) {
-    .neck,
-    .fretboard {
+    .neck {
       --width: 300px;
     }
   }
