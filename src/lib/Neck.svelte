@@ -3,6 +3,9 @@
 
   export let chord = {
     chordName: 'Em',
+    rootNote: 'E',
+    third: 'G',
+    fifth: 'B',
     strings: '0,2,2,0,0,0',
   }
 
@@ -10,7 +13,7 @@
   const strings = chord.strings.split(',')
 
   let neckNotes = []
-  let rootNote = 'C'
+  let rootNote = chord.chordName.charAt(0)
 
   neck.subscribe(notes => {
     neckNotes = notes
@@ -43,14 +46,18 @@
 
   const notes = getNotes(strings)
   const range = getRange(notes)
-
 </script>
 
 <div class='neck'>
   <h1>Neck</h1>
   <h2>lowest {range.min} | highest: {range.max}</h2>
   <h3>Showing : {showNotes ? 'Notes' : 'Fingering'}</h3>
-  <button on:click={()=> showNotes = !showNotes}>Show notes</button>
+  <button on:click={()=> showNotes = !showNotes}>Show  {showNotes ? 'Fingering' : 'Notes'}</button>
+    <div class='indicator' class:muted={!showNotes}>
+      <div class='root'>Root</div>
+      <div class='third'>Third</div>
+      <div class='fifth'>Fifth</div>
+    </div>
   <div class='neck-template'
        style='--height: {range.max - range.min + 1}; --neck-border: {range.min === 0 ? "5px solid" : ""}'>
     {#each notes as string, i}
@@ -59,7 +66,15 @@
       {:else}
         {#if showNotes}
           <div
-            class={neckNotes[i][string.noteNumber] === rootNote ? 'string flex-center is-root' : 'string flex-center' }
+            class={
+              neckNotes[i][string.noteNumber] === rootNote
+              ? 'string flex-center root'
+              : neckNotes[i][string.noteNumber] === chord.third
+              ? 'string flex-center third'
+              : neckNotes[i][string.noteNumber] === chord.fifth
+              ? 'string flex-center fifth'
+              : 'string flex-center '
+            }
             style='--top-factor: {string.noteNumber - range.min}'>
             {neckNotes[i][string.noteNumber]}
           </div>
@@ -122,9 +137,18 @@
     z-index: 10;
   }
 
-  .string.is-root {
+  .root {
     background-color: green;
   }
+
+  .third {
+    background-color: yellow;
+  }
+
+  .fifth {
+    background-color: violet;
+  }
+
   .string.muted {
     background-color: gray;
   }
@@ -155,7 +179,15 @@
     width: 100%;
   }
 
-  @media screen and (max-width: 590px) {
+  .indicator {
+    margin: 1rem auto;
+    width: 200px;
+  }
+  .indicator.muted {
+    filter: contrast(0);
+  }
+
+  @media screen and (max-width: 768px) {
     .neck-template {
       --width: 300px;
     }

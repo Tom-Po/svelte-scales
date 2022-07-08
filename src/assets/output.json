@@ -1,79 +1,136 @@
 [
   {
     "chordName":"C",
+    "rootNote": "C",
+    "third":"E",
+    "fifth":"G",
     "strings":"X,3,2,0,1,0"
   },
   {
     "chordName":"C",
+    "rootNote":"C",
+    "third":"E",
+    "fifth":"G",
     "strings":"X,3,5,5,5,3"
   },
   {
     "chordName":"CM9/b",
+    "rootNote":"C",
+    "third":"E",
+    "fifth":"G",
     "strings":"X,2,0,0,1,x"
   },
   {
     "chordName":"Cm",
+    "rootNote":"C",
+    "third":"E",
+    "fifth":"G",
     "strings":"X,3,5,5,4,3"
   },
   {
     "chordName":"C7",
+    "rootNote":"C",
+    "third":"E",
+    "fifth":"G",
     "strings":"X,3,5,3,5,3"
   },
   {
     "chordName":"Cm7",
+    "rootNote":"C",
+    "third":"E",
+    "fifth":"G",
     "strings":"X,3,5,3,4,3"
   },
   {
     "chordName":"CM7",
+    "rootNote":"C",
+    "third":"E",
+    "fifth":"G",
     "strings":"X,3,5,4,5,X"
   },
   {
     "chordName":"Cdim",
+    "rootNote":"C",
+    "third":"E",
+    "fifth":"G",
     "strings":"X,3,4,2,4,X"
   },
   {
     "chordName":"C6",
+    "rootNote":"C",
+    "third":"E",
+    "fifth":"G",
     "strings":"X,3,2,2,1,0"
   },
   {
     "chordName":"D",
+    "rootNote": "D",
+    "third":"F#",
+    "fifth":"A",
     "strings":"X,X,0,2,3,2"
   },
   {
     "chordName":"Dm",
+    "rootNote": "D",
+    "third":"F",
+    "fifth":"A",
     "strings":"X,X,0,2,3,1"
   },
   {
     "chordName":"D7",
+    "rootNote": "D",
+    "third":"F#",
+    "fifth":"A",
     "strings":"X,X,0,2,1,2"
   },
   {
     "chordName":"Dm7",
-    "strings":",X,X,0,2,1,1,"
+    "rootNote": "D",
+    "third":"F",
+    "fifth":"A",
+    "strings":"X,X,0,2,1,1,"
   },
   {
     "chordName":"DM7",
+    "rootNote": "D",
+    "third":"F#",
+    "fifth":"A",
     "strings":"X,5,7,6,7,X"
   },
   {
     "chordName":"E",
+    "rootNote": "E",
+    "third": "G#",
+    "fifth": "B",
     "strings":"0,2,2,1,0,0"
   },
   {
     "chordName":"Em",
+    "rootNote": "E",
+    "third": "G#",
+    "fifth": "B",
     "strings":"0,2,2,0,0,0"
   },
   {
     "chordName":"E7",
+    "rootNote": "E",
+    "third": "G#",
+    "fifth": "B",
     "strings":"0,2,0,1,3,0"
   },
   {
     "chordName":"Em7",
+    "rootNote": "E",
+    "third": "G#",
+    "fifth": "B",
     "strings":"0,2,0,0,3,0"
   },
   {
     "chordName":"EM7",
-    "strings":",X,7,9,8,9,X"
+    "rootNote": "E",
+    "third": "G#",
+    "fifth": "B",
+    "strings":"X,7,9,8,9,X"
   },
   {
     "chordName":"G",

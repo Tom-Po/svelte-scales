@@ -10,14 +10,8 @@
   import ChordDetail from './routes/ChordDetail.svelte'
   import AddChord from './routes/AddChord.svelte'
   import GlobalStyles from './styles/GlobalStyles.svelte'
-  import { onMount } from 'svelte'
-  import { chords } from './stores.js'
-  import chordFile from './assets/output.json'
   import SandBox from './routes/SandBox.svelte'
 
-  onMount(() => {
-    chords.update(() => (chordFile))
-  })
 
   const routes = {
     '/': Index,
