@@ -11,7 +11,7 @@
   import { defaultChords } from './utils/Chords.js'
   import Frets from './Frets.svelte'
 
-  export let chord = defaultChords
+  export let chord = defaultChords[0]
 
   let showNotes = false
   let rootNote = chord.chordName.charAt(0)
@@ -26,6 +26,27 @@
 
   const notes = getNotesFromStrings(strings)
   const range = getRange(notes)
+
+  const getClassNames = (stringIndex, note, classNames) => {
+    switch (note) {
+      case neck[stringIndex][note] === chord.rootNote: {
+        return classNames += ' root'
+      }
+      case neck[stringIndex][note] === chord.third: {
+        return classNames += ' third'
+      }
+      case neck[stringIndex][note] === chord.fifth: {
+        return classNames += ' fifth'
+      }
+      default : {
+        return classNames
+      }
+    }
+  }
+
+  // Make notes appear before first fret
+  const upperNeckModifier = range.min === 0 ? -1 : 0
+
 </script>
 
 <div class='neck'>
@@ -39,10 +60,10 @@
     <div class='fifth'>Fifth {chord.fifth}</div>
   </div>
   <div class='neck-template'
-       style='--height: {range.max - range.min + 1}; --neck-border: {range.min === 0 ? "5px solid" : ""}'>
+       style='--height: {range.max - range.min + 1 + upperNeckModifier}; --neck-border: {range.min === 0 ? "5px solid" : ""}'>
     {#each notes as string, i}
       {#if string.isMuted}
-        <div class='string muted flex-center' style='--top-factor: 0'>X</div>
+        <div class='string muted flex-center' style='--top-factor: -1'>X</div>
       {:else}
         {#if showNotes}
           <div
@@ -55,11 +76,11 @@
               ? 'string flex-center fifth'
               : 'string flex-center '
             }
-            style='--top-factor: {string.noteNumber - range.min}'>
+            style='--top-factor: {string.noteNumber - range.min + upperNeckModifier}'>
             {neck[i][string.noteNumber]}
           </div>
         {:else}
-          <div class='string flex-center' style='--top-factor: {string.noteNumber - range.min}'>
+          <div class='string flex-center' style='--top-factor: {string.noteNumber - range.min + upperNeckModifier}'>
             {string.noteNumber}
           </div>
         {/if}
@@ -69,7 +90,7 @@
       <div class='string-wave' style='--left-factor: {i}'></div>
     {/each}
 
-    <Frets count={range.max - range.min}/>
+    <Frets count={range.max - range.min + upperNeckModifier} />
   </div>
   <div class='notes flex-center'>
     {#each notes as string, i}
@@ -105,7 +126,7 @@
     width: var(--width);
     height: calc(var(--height) * var(--string-width));
 
-    margin: 3rem auto 0;
+    margin: 4rem auto 0;
   }
 
   .string-wave {
@@ -131,7 +152,7 @@
     background-color: gray;
     border-radius: 50%;
     transition: all 200ms ease;
-    transform: translateY(-1px) scale(.9);
+    transform: translateY(-1px) scale(.8);
     transform-origin: center center;
     z-index: 10;
     font-weight: 700;
