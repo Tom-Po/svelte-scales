@@ -1,51 +1,35 @@
 <script>
   import {
-    getDiminishedFifth,
-    getFifth,
-    getMinorThird,
     getNotesFromStrings,
     getRange,
-    getThird,
   } from './utils/Notes.js'
   import { neck } from './utils/Neck.js'
-  import { defaultChords } from './utils/Chords.js'
+  import { defaultChords, getChord } from './utils/Chords.js'
   import Frets from './Frets.svelte'
 
   export let chord = defaultChords[0]
 
   let showNotes = false
-  let rootNote = chord.chordName.charAt(0)
   const strings = chord.strings.split(',')
 
-  chord = {
-    ...chord,
-    rootNote,
-    third: chord.chordName.includes('m') ? getMinorThird(rootNote) : getThird(rootNote),
-    fifth: chord.chordName.includes('dim' || 'b5') ? getDiminishedFifth(rootNote) : getFifth(rootNote),
-  }
+  chord = getChord(chord)
 
   const notes = getNotesFromStrings(strings)
+
+  // Get lowest and highest notes
   const range = getRange(notes)
 
-  const getClassNames = (stringIndex, note, classNames) => {
-    switch (note) {
-      case neck[stringIndex][note] === chord.rootNote: {
-        return classNames += ' root'
-      }
-      case neck[stringIndex][note] === chord.third: {
-        return classNames += ' third'
-      }
-      case neck[stringIndex][note] === chord.fifth: {
-        return classNames += ' fifth'
-      }
-      default : {
-        return classNames
-      }
-    }
-  }
-
+  const isTopNeck = range.min === 0
   // Make notes appear before first fret
-  const upperNeckModifier = range.min === 0 ? -1 : 0
+  // When lowest is 0
+  const upperNeckModifier = isTopNeck ? -1 : 0
+
+  // Number of frets to display
+  // Difference between highest and lowest added modifier if lowest is 0
+  const fretCount = range.max - range.min + upperNeckModifier;
+
+  // Get Height of fretboard
+  const fretboardHeight = fretCount + 1
 
 </script>
 
@@ -59,16 +43,17 @@
     <div class='third'>Third {chord.third}</div>
     <div class='fifth'>Fifth {chord.fifth}</div>
   </div>
-  <div class='neck-template'
-       style='--height: {range.max - range.min + 1 + upperNeckModifier}; --neck-border: {range.min === 0 ? "5px solid" : ""}'>
+  <div class='fretboard'
+       style='
+       --height: {fretboardHeight};
+       --fretboard-border: {isTopNeck ? "5px solid" : ""}'>
     {#each notes as string, i}
       {#if string.isMuted}
         <div class='string muted flex-center' style='--top-factor: -1'>X</div>
-      {:else}
-        {#if showNotes}
-          <div
-            class={
-              neck[i][string.noteNumber] === rootNote
+      {:else if showNotes}
+        <div
+          class={
+              neck[i][string.noteNumber] === chord.rootNote
               ? 'string flex-center root'
               : neck[i][string.noteNumber] === chord.third
               ? 'string flex-center third'
@@ -76,21 +61,20 @@
               ? 'string flex-center fifth'
               : 'string flex-center '
             }
-            style='--top-factor: {string.noteNumber - range.min + upperNeckModifier}'>
-            {neck[i][string.noteNumber]}
-          </div>
-        {:else}
-          <div class='string flex-center' style='--top-factor: {string.noteNumber - range.min + upperNeckModifier}'>
-            {string.noteNumber}
-          </div>
-        {/if}
+          style='--top-factor: {string.noteNumber - range.min + upperNeckModifier}'>
+          {neck[i][string.noteNumber]}
+        </div>
+      {:else}
+        <div class='string flex-center' style='--top-factor: {string.noteNumber - range.min + upperNeckModifier}'>
+          {string.noteNumber}
+        </div>
       {/if}
     {/each}
     {#each notes as _, i}
       <div class='string-wave' style='--left-factor: {i}'></div>
     {/each}
 
-    <Frets count={range.max - range.min + upperNeckModifier} />
+    <Frets count={fretCount} />
   </div>
   <div class='notes flex-center'>
     {#each notes as string, i}
@@ -111,14 +95,14 @@
 
 <style>
   .neck,
-  .neck-template {
+  .fretboard {
     --width: 33vw;
     --string-width: calc(var(--width) / 6);
-    --neck-border: 0;
+    --fretboard-border: 0;
   }
 
-  .neck-template {
-    border-top: var(--neck-border);
+  .fretboard {
+    border-top: var(--fretboard-border);
     background-color: var(--bg-color);
 
     position: relative;
@@ -221,7 +205,7 @@
 
   @media screen and (max-width: 768px) {
     .neck,
-    .neck-template {
+    .fretboard {
       --width: 300px;
     }
   }
