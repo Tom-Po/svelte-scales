@@ -28,7 +28,6 @@
 </svelte:head>
 
 <PageTransition>
-  <SineWave />
   <!--{#if chordsFromAPI}-->
   <!--  <h2>List of chords from Mongo</h2>-->
   <!--  <ul>-->

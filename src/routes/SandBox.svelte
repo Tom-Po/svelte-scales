@@ -2,6 +2,8 @@
   import { draw } from 'svelte/transition'
   import { quintOut } from 'svelte/easing'
   import PageTransition from '../lib/PageTransition.svelte'
+  import SineWave from '../lib/SineWave.svelte'
+
   let condition = false
 </script>
 
@@ -11,33 +13,35 @@
   <button on:click={() => condition = !condition}>
     show svg
   </button>
+
+  <SineWave />
+
+  <svg viewBox='0 0 300 300'>
+
+    {#if condition}
+      <rect transition:draw='{{duration: 1500, easing: quintOut}}'
+            style='stroke: rgb(0, 0, 0); paint-order: stroke; fill: rgba(172, 224, 52, 0);'
+            transform='matrix(0.707107, 0.707107, -0.707107, 0.707107, 166.943146, -89.23568) translate(-100, -90)'
+            x='153.928' y='220.64' width='150' height='150' rx='2' ry='2' />
+      <rect transition:draw='{{duration: 1500, easing: quintOut}}'
+            style='stroke: rgb(0, 0, 0); paint-order: stroke; fill: rgba(172, 224, 52, 0);'
+            transform='matrix(0.707107, 0.707107, -0.707107, 0.707107, 166.943146, -89.23568) translate(-100, -90)'
+            x='160.928' y='225.64' width='150' height='150' rx='2' ry='2' />
+      <rect transition:draw='{{duration: 1500, easing: quintOut}}'
+            style='stroke: rgb(0, 0, 0); paint-order: stroke; fill: rgba(172, 224, 52, 0);'
+            transform='matrix(0.707107, 0.707107, -0.707107, 0.707107, 166.943146, -89.23568) translate(-100, -90)'
+            x='170.928' y='230.64' width='150' height='150' rx='2' ry='2' />
+      <rect transition:draw='{{duration: 1500, easing: quintOut}}'
+            style='stroke: rgb(0, 0, 0); paint-order: stroke; fill: rgba(172, 224, 52, 0);'
+            transform='matrix(0.707107, 0.707107, -0.707107, 0.707107, 166.943146, -89.23568) translate(-100, -90)'
+            x='180.928' y='235.64' width='150' height='150' rx='2' ry='2' />
+      <rect transition:draw='{{duration: 1500, easing: quintOut}}'
+            style='stroke: rgb(0, 0, 0); paint-order: stroke; fill: rgba(172, 224, 52, 0);'
+            transform='matrix(0.707107, 0.707107, -0.707107, 0.707107, 166.943146, -89.23568) translate(-100, -90)'
+            x='190.928' y='240.64' width='150' height='150' rx='2' ry='2' />
+    {/if}
+  </svg>
 </PageTransition>
-
-<svg viewBox='0 0 300 300'>
-  {#if condition}
-    <rect transition:draw='{{duration: 1500, easing: quintOut}}'
-          style='stroke: rgb(0, 0, 0); paint-order: stroke; fill: rgba(172, 224, 52, 0);'
-          transform='matrix(0.707107, 0.707107, -0.707107, 0.707107, 166.943146, -89.23568) translate(-100, -90)'
-          x='153.928' y='220.64' width='150' height='150' rx='2' ry='2' />
-    <rect transition:draw='{{duration: 1500, easing: quintOut}}'
-          style='stroke: rgb(0, 0, 0); paint-order: stroke; fill: rgba(172, 224, 52, 0);'
-          transform='matrix(0.707107, 0.707107, -0.707107, 0.707107, 166.943146, -89.23568) translate(-100, -90)'
-          x='160.928' y='225.64' width='150' height='150' rx='2' ry='2' />
-    <rect transition:draw='{{duration: 1500, easing: quintOut}}'
-          style='stroke: rgb(0, 0, 0); paint-order: stroke; fill: rgba(172, 224, 52, 0);'
-          transform='matrix(0.707107, 0.707107, -0.707107, 0.707107, 166.943146, -89.23568) translate(-100, -90)'
-          x='170.928' y='230.64' width='150' height='150' rx='2' ry='2' />
-    <rect transition:draw='{{duration: 1500, easing: quintOut}}'
-          style='stroke: rgb(0, 0, 0); paint-order: stroke; fill: rgba(172, 224, 52, 0);'
-          transform='matrix(0.707107, 0.707107, -0.707107, 0.707107, 166.943146, -89.23568) translate(-100, -90)'
-          x='180.928' y='235.64' width='150' height='150' rx='2' ry='2' />
-    <rect transition:draw='{{duration: 1500, easing: quintOut}}'
-          style='stroke: rgb(0, 0, 0); paint-order: stroke; fill: rgba(172, 224, 52, 0);'
-          transform='matrix(0.707107, 0.707107, -0.707107, 0.707107, 166.943146, -89.23568) translate(-100, -90)'
-          x='190.928' y='240.64' width='150' height='150' rx='2' ry='2' />
-  {/if}
-</svg>
-
 
 <style>
   svg {
