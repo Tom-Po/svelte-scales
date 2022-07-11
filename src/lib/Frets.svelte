@@ -8,7 +8,7 @@
 
 <style>
   .fret {
-    border-bottom: 2px solid grey;
+    border-bottom: 2px solid rgba(230, 230, 230 , .2);
     height: calc(var(--string-width) - 2px);
     width: 100%;
   }

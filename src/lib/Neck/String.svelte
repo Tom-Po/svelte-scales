@@ -20,7 +20,7 @@
       : 'string flex-center '
     }
     style='--top-factor: {note - modifier}'>
-    {neck[noteIndex][note]}
+    {neck[noteIndex][note] || 'X'}
   </div>
 {:else}
   <div class='string flex-center' style='--top-factor: {note - modifier}'>
@@ -44,6 +44,7 @@
     transform-origin: center center;
     z-index: 10;
     font-weight: 700;
+    animation: grow 500ms ease-in-out forwards;
   }
 
   .string:hover {
@@ -86,5 +87,17 @@
 
   .string:nth-of-type(6) {
     left: calc(var(--width) / 6 * 5);
+  }
+
+  @keyframes grow {
+    0% {
+      transform: translateY(-1px) scale(.8);
+    }
+    50% {
+      transform: translateY(-1px) scale(.9);
+    }
+    100% {
+      transform: translateY(-1px) scale(.8);
+    }
   }
 </style>
